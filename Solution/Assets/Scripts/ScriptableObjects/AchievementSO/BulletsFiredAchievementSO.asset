@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbdcd6dbbe8e1774896510ddd705b92b, type: 3}
+  m_Name: BulletsFiredAchievementSO
+  m_EditorClassIdentifier: 
+  Tiers:
+  - name: Shooter
+    info: Fired 10 Bullets
+    SelectAchievement: 1
+    requirement: 10
+  - name: Pro Shooter
+    info: Fired 25 Bullets
+    SelectAchievement: 2
+    requirement: 25
+  - name: Shoot Blooded
+    info: Fired 50 Bullets
+    SelectAchievement: 3
+    requirement: 50
+  - name: Born to Shoot
+    info: Fired 100 Bullets
+    SelectAchievement: 4
+    requirement: 100

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6b98f469c431d4c4385933c009ca8a04
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BulletFiredAchievementSO: {fileID: 11400000, guid: 45e3c6d6abceeb747a4ed5eebf45fd13,
+      type: 2}
+  - EnemiesKilledAchievementSO: {fileID: 11400000, guid: 51929d648d4e0a44691ab4b4018571bf,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
