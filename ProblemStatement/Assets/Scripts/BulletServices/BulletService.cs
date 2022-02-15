@@ -6,7 +6,7 @@ using BulletSO;
 
 namespace BulletServices
 {
-    public class BulletService : GenericSingleton<BulletService>
+    public class BulletService : GenericMonoSingleton<BulletService>
     {
 
         private List<BulletController> bullets = new List<BulletController>();
@@ -20,7 +20,8 @@ namespace BulletServices
 
         public void DestroyBullet(BulletController bullet)
         {
-            bullet.DestroyController();
+            if (bullet != null)
+                bullet.DestroyController();
 
             for (int i = 0; i < bullets.Count; i++)
             {

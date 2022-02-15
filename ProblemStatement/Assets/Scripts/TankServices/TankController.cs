@@ -1,10 +1,9 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+using Commons;
 using BulletServices;
 using BulletSO;
 using VFXServices;
-
+using System;
 
 namespace TankServices
 {
@@ -20,7 +19,6 @@ namespace TankServices
             tankView = GameObject.Instantiate<TankView>(_tankView);
             CameraController.instance.SetTarget(tankView.transform);
             rigidbody = tankView.GetComponent<Rigidbody>();
-
             tankView.SetTankController(this);
             tankModel.SetTankController(this);
             tankView.ChangeColor(tankModel.material);
@@ -41,8 +39,17 @@ namespace TankServices
 
         public void ShootBullet()
         {
+            // EventService eventService = new EventService();
+            EventService.instance.OnPlayerFiredBullet += UpdateBulletCounter;
+            EventService.instance.InvokeEvent();
             BulletService.instance.CreateBullet(GetFiringPosition(), GetFiringAngle(), GetBullet());
         }
+
+        private void UpdateBulletCounter()
+        {
+            Debug.Log("BulletFiredbyPlayer");
+        }
+
         public Vector3 GetFiringPosition()
         {
             return tankView.BulletShootPoint.position;
@@ -54,6 +61,10 @@ namespace TankServices
         public BulletScriptableObject GetBullet()
         {
             return tankModel.bulletType;
+        }
+        public Vector3 GetCurrentTankPosition()
+        {
+            return tankView.transform.position;
         }
 
         public void DestroyController()

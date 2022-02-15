@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.AI;
 using VFXServices;
 using BulletServices;
@@ -11,15 +9,6 @@ namespace EnemyServices
     {
         public EnemyModel model { get; private set; }
         public EnemyView view { get; private set; }
-
-        public enum States
-        {
-            none,
-            patrolling,
-            following,
-            attacking,
-        }
-        public States currentState;
 
         private float timer;
         private float canFire = 0f;
@@ -40,28 +29,13 @@ namespace EnemyServices
             return navHit.position;
         }
 
-        public void Movement()
-        {
-            if (!view.playerDetected && currentState != States.attacking)
-            {
-                Patrol();
-            }
-            else
-            {
-                Follow();
-            }
-        }
 
         public void Attack()
         {
-            if (model.attackDist >= Vector3.Distance(view.transform.position, view.GetTank().position))
+            if (canFire < Time.time)
             {
-                currentState = States.attacking;
-                if (canFire < Time.time)
-                {
-                    canFire = model.fireRate + Time.time;
-                    BulletService.instance.CreateBullet(view.shootingPoint.position, GetFiringAngle(), model.bullet);
-                }
+                canFire = model.fireRate + Time.time;
+                BulletService.instance.CreateBullet(view.shootingPoint.position, GetFiringAngle(), model.bullet);
             }
         }
 
@@ -70,15 +44,8 @@ namespace EnemyServices
             return view.transform.rotation;
         }
 
-        private void Follow()
+        public void Patrol()
         {
-            currentState = States.following;
-            view.navMeshAgent.SetDestination(view.GetTank().position);
-        }
-
-        private void Patrol()
-        {
-            currentState = States.patrolling;
             timer += Time.deltaTime;
             if (timer > model.patrolTime)
             {

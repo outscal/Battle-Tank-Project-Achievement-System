@@ -30,7 +30,8 @@ namespace BulletServices
 
         public void DestroyController()
         {
-            VFXService.instance.InstantiateEffects(bulletView.BullectDestroyVFX, bulletView.transform.position);
+            if (bulletView)
+                VFXService.instance.InstantiateEffects(bulletView.BullectDestroyVFX, bulletView.transform.position);
             bulletView.DestroyView();
             bulletModel.DestroyModel();
 

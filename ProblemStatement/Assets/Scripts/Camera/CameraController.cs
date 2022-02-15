@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Commons;
 using Cinemachine;
-public class CameraController : GenericSingleton<CameraController>
+public class CameraController : GenericMonoSingleton<CameraController>
 {
     private CinemachineVirtualCamera virtualCamera;
 

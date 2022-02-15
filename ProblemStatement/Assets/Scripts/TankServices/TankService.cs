@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Commons;
-using BulletServices;
 using TankSO;
 
 
 namespace TankServices
 {
-    public class TankService : GenericSingleton<TankService>
+    public class TankService : GenericMonoSingleton<TankService>
     {
         public TankScriptableObjectList tankList;
         public TankScriptableObject tankScriptable { get; private set; }

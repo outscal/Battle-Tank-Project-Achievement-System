@@ -19,7 +19,7 @@ MonoBehaviour:
   movementSpeed: 40
   rotationSpeed: 80
   patrollingRadius: 30
-  patrolTime: 10
+  patrolTime: 5
   fireRate: 0.5
   attackDistace: 5
   bulletType: {fileID: 11400000, guid: b0f2c2ddca7b55444845206d3060c682, type: 2}

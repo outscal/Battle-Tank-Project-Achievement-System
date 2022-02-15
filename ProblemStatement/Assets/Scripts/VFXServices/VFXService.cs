@@ -5,7 +5,7 @@ using Commons;
 
 namespace VFXServices
 {
-    public class VFXService : GenericSingleton<VFXService>
+    public class VFXService : GenericMonoSingleton<VFXService>
     {
         public void InstantiateEffects(GameObject Effects, Vector3 position)
         {

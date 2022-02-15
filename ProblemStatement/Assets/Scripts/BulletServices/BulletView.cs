@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using Commans;
+using Commons;
 
 namespace BulletServices
 {
@@ -25,18 +25,21 @@ namespace BulletServices
         {
             //write synchronous stuff for start() above this line --^
             await Task.Delay(TimeSpan.FromSeconds(2f));
-            if (this != null)
+            if (bulletController != null)
                 BulletService.instance.DestroyBullet(bulletController);
         }
 
         private void OnCollisionEnter(Collision other)
         {
-            IDamagable iDamagable = other.gameObject.GetComponent<IDamagable>();
-            if (iDamagable != null)
+            if (bulletController != null)
             {
-                iDamagable.TakeDamage(bulletController.bulletModel.damage);
+                IDamagable iDamagable = other.gameObject.GetComponent<IDamagable>();
+                if (iDamagable != null)
+                {
+                    iDamagable.TakeDamage(bulletController.bulletModel.damage);
+                }
+                BulletService.instance.DestroyBullet(bulletController);
             }
-            BulletService.instance.DestroyBullet(bulletController);
         }
 
         public void DestroyView()

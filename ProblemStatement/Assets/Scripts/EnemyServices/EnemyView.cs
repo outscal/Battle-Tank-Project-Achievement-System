@@ -1,63 +1,81 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.AI;
 using TankServices;
-using Commans;
+using Commons;
 namespace EnemyServices
 {
     public class EnemyView : MonoBehaviour, IDamagable
     {
+        [Header("VFX")]
         public GameObject TankDestroyVFX;
+
+        [Header("Shooting")]
         public Transform shootingPoint;
-        private EnemyController controller;
+
+        [Header("States")]
+        public EnemyPatrollingState patrollingState;
+        public EnemyChasingState chasingState;
+        public EnemyAttackingState attackingState;
+        public EnemyState initialState;
+        public EnemyState activeState;
+        public EnemyStates currentState;
+
+        public EnemyController controller { get; private set; }
         public NavMeshAgent navMeshAgent { get; private set; }
-
-        public bool playerDetected; //{ get; private set; }
-
+        private TankView tankView;
 
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
+        private void Start()
+        {
+            InitializeState();
+        }
+
         public void SetEnemyController(EnemyController _controller)
         {
             controller = _controller;
         }
-
-        private void Update()
+        public void SetTankView(TankView tank)
         {
-            Debug.Log(controller.currentState);
-            controller.Movement();
-            if (playerDetected)
-                controller.Attack();
+            tankView = tank;
+        }
+        public Transform GetTankTransform()
+        {
+            return tankView.transform;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void InitializeState()
         {
-            if (other.GetComponent<TankView>() != null)
-                playerDetected = true;
-        }
-
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.GetComponent<TankView>() != null)
+            switch (initialState)
             {
-                playerDetected = false;
+                case EnemyState.Attacking:
+                    currentState = attackingState;
+                    break;
+                case EnemyState.Chasing:
+                    currentState = chasingState;
+                    break;
+                case EnemyState.Patrolling:
+                    currentState = patrollingState;
+                    break;
+                default:
+                    currentState = null;
+                    break;
             }
+            currentState.OnStateEnter();
         }
-        public Transform GetTank()
-        {
-            return TankService.instance.tankScriptable.tankView.transform;
-        }
+
         public void DestroyView()
         {
-
             shootingPoint = null;
             controller = null;
             navMeshAgent = null;
             TankDestroyVFX = null;
+            currentState = null;
+            patrollingState = null;
+            chasingState = null;
+            attackingState = null;
             Destroy(this.gameObject);
         }
 
@@ -65,5 +83,6 @@ namespace EnemyServices
         {
             controller.ApplyDamage(damage);
         }
+
     }
 }
